@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_drinks/database/app_database.dart';
 import 'package:app_drinks/models/drink_detail.dart';
 import 'package:app_drinks/models/favorite_drink.dart';
@@ -16,8 +18,14 @@ class DrinkDao {
     final Database db = await createDataBase();
     final String json = drinkDetailsToJson(drink);
     final MarkedDrink favoriteDrink = MarkedDrink(json);
-    return db.insert(_tableName, favoriteDrink.toMap());
+    final List<Map<String, dynamic>> result =
+    await db.query(_tableName, where: '$_json = ?', whereArgs: [favoriteDrink.json]);
+    if(result.isEmpty){
+      return db.insert(_tableName, favoriteDrink.toMap());
+    }
+    throw DataBaseException('Drink already exist');
   }
+
 
   Future<MarkedDrink> selectById(int? id) async {
     final Database db = await createDataBase();
@@ -56,4 +64,10 @@ class DrinkDao {
     final Database db = await createDataBase();
     return db.delete(_tableName, where: '$_id = ?', whereArgs: [id]);
   }
+}
+
+class DataBaseException implements Exception{
+  final String? message;
+
+  DataBaseException(this.message);
 }

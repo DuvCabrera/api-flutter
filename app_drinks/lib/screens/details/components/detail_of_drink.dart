@@ -1,3 +1,4 @@
+import 'package:app_drinks/components/snack_bar.dart';
 import 'package:app_drinks/database/dao/drink_dao.dart';
 import 'package:app_drinks/models/drink_detail.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,7 @@ class DetailOfDrink extends StatelessWidget {
   final DrinkDetails drinkDetails;
   final Size size;
 
-  DetailOfDrink(this.drinkDetails, this.size, {Key? key})
-      : super(key: key);
+  DetailOfDrink(this.drinkDetails, this.size, {Key? key}) : super(key: key);
 
   final DrinkDao _dao = DrinkDao();
 
@@ -32,7 +32,7 @@ class DetailOfDrink extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(kDefaultPadding),
-            margin:  const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+            margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -52,7 +52,11 @@ class DetailOfDrink extends StatelessWidget {
                     ],
                   ),
                 ),
-                ElevatedButton(onPressed: () => _dao.saveDrink(drinkDetails), child: const Text('Save')),
+                ElevatedButton(
+                    onPressed: () async {
+                      await _save(context);
+                    },
+                    child: const Text('Save')),
               ],
             ),
           ),
@@ -73,14 +77,15 @@ class DetailOfDrink extends StatelessWidget {
               child: Column(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(bottom: 8.0,top: 8.0),
+                    padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
                     child: Text(
                       'Ingredients:',
                       style: textTitleStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0, bottom: 8.0,right: 8.0),
+                    padding: const EdgeInsets.only(
+                        left: 16.0, bottom: 8.0, right: 8.0),
                     child: Text(
                       (drink['strIngredient1'] ?? "") +
                           " " +
@@ -139,15 +144,22 @@ class DetailOfDrink extends StatelessWidget {
               child: Column(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(bottom: 8.0,top: 8.0),
-                    child: Text('Instructions:',style: textTitleStyle,),
+                    padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
+                    child: Text(
+                      'Instructions:',
+                      style: textTitleStyle,
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0, bottom: 8.0,right: 8.0),
-                    child: Text(drink['strInstructions']!,style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400),),
+                    padding: const EdgeInsets.only(
+                        left: 16.0, bottom: 8.0, right: 8.0),
+                    child: Text(
+                      drink['strInstructions']!,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400),
+                    ),
                   )
                 ],
               ),
@@ -156,5 +168,15 @@ class DetailOfDrink extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _save(BuildContext context) async {
+    try {
+      await _dao.saveDrink(drinkDetails);
+      await snackBarClickResponse(
+          context, 'Your drink has been saved');
+    } on DataBaseException catch (e) {
+      snackBarClickResponse(context, e.message!);
+    }
   }
 }

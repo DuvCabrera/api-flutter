@@ -1,3 +1,4 @@
+import 'package:app_drinks/components/snack_bar.dart';
 import 'package:app_drinks/database/dao/drink_dao.dart';
 import 'package:app_drinks/models/drink_detail.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +6,11 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class FavoriteDetailsDrink extends StatelessWidget {
-  FavoriteDetailsDrink(
-    this.drinkDetails,
-    this.size,
-    this.id, {
-    Key? key,
-  }) : super(key: key);
+  FavoriteDetailsDrink(this.drinkDetails,
+      this.size,
+      this.id, {
+        Key? key,
+      }) : super(key: key);
 
   final int? id;
   final Size size;
@@ -58,7 +58,11 @@ class FavoriteDetailsDrink extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () => _dao.deleteDrink(id!),
+                    onPressed: () {
+                      _dao.deleteDrink(id!);
+                      snackBarClickResponse(context, 'The drink has been deleted');
+                      Navigator.pop(context);
+                    },
                     child: const Text('Deleted')),
               ],
             ),
