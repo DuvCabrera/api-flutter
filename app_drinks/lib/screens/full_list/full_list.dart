@@ -1,6 +1,8 @@
 import 'package:app_drinks/models/list_drink.dart';
+import 'package:app_drinks/models/search.dart';
 import 'package:app_drinks/screens/full_list/components/body.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FullList extends StatelessWidget {
   final List<Drink> listDrink;
@@ -9,6 +11,6 @@ class FullList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Body(listDrink),);
+    return ChangeNotifierProvider(create: (context) => Search(), child: Scaffold(body: Body(listDrink),),);
   }
 }

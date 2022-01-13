@@ -3,7 +3,8 @@ import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:app_drinks/http/interceptors/logging_interceptor.dart';
 
 
-final Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+final Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()],
+requestTimeout: const Duration(seconds: 5));
 
 const String drinkTypeUrl = 'http://www.thecocktaildb.com/api/json/v1/1/filter.php?a=';
 const String searchByIdUrl = 'http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';

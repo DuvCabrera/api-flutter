@@ -1,4 +1,4 @@
-import 'package:app_drinks/components/title_bar_without_back_button.dart';
+import 'package:app_drinks/screens/bookmarks/components/title_with_searchbar_without_backarrow.dart';
 import 'package:flutter/material.dart';
 
 import 'future_grid_list.dart';
@@ -12,9 +12,9 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MainTitleBar(size, 'BookMark'),
-          FutureGridList(size),
+        children: [TitleWithSearchBarWithoutBackArrow(size, 'BookMark'),
+        FutureGridList(size),
+
         ],
       ),
     );

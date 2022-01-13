@@ -1,6 +1,6 @@
-import 'package:app_drinks/components/title_bar.dart';
 import 'package:app_drinks/models/list_drink.dart';
-import 'package:app_drinks/components/search_grid_list.dart';
+import 'package:app_drinks/screens/full_list/components/all_drinks_grid.dart';
+import 'package:app_drinks/screens/full_list/components/title_with_searchbar.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatelessWidget {
@@ -14,9 +14,8 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TitleBar(size, 'Chose One'),
-          SearchGridList(listDrink, size),
+        children: [TitleWithSearchBar(size, 'Chose One'),
+         AllDrinksGrid(listDrink, size),
         ],
       ),
     );

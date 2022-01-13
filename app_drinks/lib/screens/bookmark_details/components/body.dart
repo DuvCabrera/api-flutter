@@ -5,7 +5,7 @@ import 'favorite_future.dart';
 
 class Body extends StatelessWidget {
   const Body( this.id, {Key? key,}) : super(key: key);
-  final int? id;
+  final int id;
 
   @override
   Widget build(BuildContext context) {

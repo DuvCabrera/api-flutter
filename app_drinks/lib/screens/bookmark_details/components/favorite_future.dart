@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class FavoriteFuture extends StatelessWidget {
   FavoriteFuture (this.size, this.id,  {Key? key, }) : super(key: key);
-  final int? id;
+  final int id;
   final Size size;
 
   final DrinkDao _dao = DrinkDao();

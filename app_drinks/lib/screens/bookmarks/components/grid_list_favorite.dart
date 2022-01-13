@@ -2,15 +2,16 @@ import 'package:app_drinks/components/drink_item_card.dart';
 import 'package:app_drinks/models/drink_detail.dart';
 import 'package:app_drinks/models/favorite_drink.dart';
 import 'package:app_drinks/models/list_drink.dart';
+import 'package:app_drinks/models/search.dart';
 import 'package:app_drinks/screens/bookmark_details/bookmark_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GridListFavorite extends StatefulWidget {
-  const GridListFavorite( this.listDrink,this._size, this.word, {Key? key, }) : super(key: key);
+  const GridListFavorite( this.listDrink,this._size, {Key? key, }) : super(key: key);
 
   final Size _size;
   final List<MarkedDrink> listDrink;
-  final String word;
 
   @override
   State<GridListFavorite> createState() => _GridListFavoriteState();
@@ -35,7 +36,7 @@ class _GridListFavoriteState extends State<GridListFavorite> {
 
   @override
   Widget build(BuildContext context) {
-    _runFilter(widget.word);
+    _runFilter(Provider.of<Search>(context, listen:true).word);
     return SizedBox(
       height: widget._size.height,
       child: GridView.builder(
@@ -46,7 +47,9 @@ class _GridListFavoriteState extends State<GridListFavorite> {
           final MarkedDrink drink = searchedDrinks[index];
           final Drink drinkForCard = _jsonListConverter(searchedDrinks)[index];
 
-          return DrinkCard(drinkForCard.strDrinkThumb, drinkForCard.strDrink, () => _showDrinkDetail(context, drink.id));},
+          final int drinkId = drink.id!;
+
+          return DrinkCard(drinkForCard.strDrinkThumb, drinkForCard.strDrink, () => _showDrinkDetail(context, drinkId));},
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           mainAxisExtent:300 ,
           crossAxisCount: 2,
@@ -85,7 +88,7 @@ _jsonListConverter(List<MarkedDrink> list) {
   }
   return drinks;
 }
-_showDrinkDetail(BuildContext context, int? drinkId) {
-  Navigator.of(context).push(MaterialPageRoute(
+_showDrinkDetail(BuildContext context, int drinkId) async {
+  await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => BookMarkDetails(id: drinkId)));
 }

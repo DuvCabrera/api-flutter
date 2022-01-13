@@ -2,7 +2,7 @@ import 'package:app_drinks/components/centered_message.dart';
 import 'package:app_drinks/components/progress.dart';
 import 'package:app_drinks/database/dao/drink_dao.dart';
 import 'package:app_drinks/models/favorite_drink.dart';
-import 'package:app_drinks/screens/bookmarks/components/grid_list_with_search.dart';
+import 'package:app_drinks/screens/bookmarks/components/grid_list_favorite.dart';
 import 'package:flutter/material.dart';
 
 class FutureGridList extends StatelessWidget {
@@ -28,7 +28,7 @@ class FutureGridList extends StatelessWidget {
           case ConnectionState.done:
             if (snapshot.data != null) {
               final favoriteList = snapshot.data as List<MarkedDrink>;
-              return GridListWithSearch(favoriteList, _size);
+              return GridListFavorite(favoriteList, _size);
             } else {
               return const CenteredMessage(
                 'There are no items in de list',

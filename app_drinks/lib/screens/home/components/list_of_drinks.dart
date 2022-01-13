@@ -9,8 +9,14 @@ class ListOfDrinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int _quantity = listDrinks.drinks.length;
+    int maxQuantity = 10;
+
+    if (_quantity < 10){
+      maxQuantity = _quantity;
+    }
     return ListView.builder(
-        itemCount: listDrinks.drinks.length,
+        itemCount: maxQuantity,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
