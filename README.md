@@ -4,3 +4,4 @@
 - Build an app about drinks;
 - Integrate the app with an API;
 - Persiste data with SQLite.
+- Manipulate state with Provider
