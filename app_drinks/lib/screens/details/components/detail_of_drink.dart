@@ -17,7 +17,7 @@ class DetailOfDrink extends StatelessWidget {
   Widget build(BuildContext context) {
     final drink = drinkDetails.drinks[0];
     return SizedBox(
-      height: size.height + 1,
+      height: size.height + 12,
       width: size.width,
       child: Column(
         children: [

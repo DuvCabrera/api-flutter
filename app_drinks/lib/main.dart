@@ -1,4 +1,6 @@
+import 'package:app_drinks/models/list_marked_drinks.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/page_manager/page_manager.dart';
 
@@ -11,7 +13,7 @@ class DrinkFinder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: PageManager());
+    return ChangeNotifierProvider(create: (context) => ListMarkedDrinks(), child: const MaterialApp(
+        home: PageManager()));
   }
 }

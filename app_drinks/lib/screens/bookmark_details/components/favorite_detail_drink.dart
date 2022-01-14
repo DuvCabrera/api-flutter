@@ -1,12 +1,13 @@
 import 'package:app_drinks/components/snack_bar.dart';
-import 'package:app_drinks/database/dao/drink_dao.dart';
 import 'package:app_drinks/models/drink_detail.dart';
+import 'package:app_drinks/models/list_marked_drinks.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 
 class FavoriteDetailsDrink extends StatelessWidget {
-  FavoriteDetailsDrink(this.drinkDetails,
+  const FavoriteDetailsDrink(this.drinkDetails,
       this.size,
       this.id, {
         Key? key,
@@ -15,8 +16,6 @@ class FavoriteDetailsDrink extends StatelessWidget {
   final int? id;
   final Size size;
   final DrinkDetails drinkDetails;
-
-  final DrinkDao _dao = DrinkDao();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,7 @@ class FavoriteDetailsDrink extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      _dao.deleteDrink(id!);
+                      Provider.of<ListMarkedDrinks>(context, listen: false).deleteMarkedDrink(id);
                       snackBarClickResponse(context, 'The drink has been deleted');
                       Navigator.pop(context);
                     },

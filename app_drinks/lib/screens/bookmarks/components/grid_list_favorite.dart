@@ -2,43 +2,37 @@ import 'package:app_drinks/components/drink_item_card.dart';
 import 'package:app_drinks/models/drink_detail.dart';
 import 'package:app_drinks/models/favorite_drink.dart';
 import 'package:app_drinks/models/list_drink.dart';
+import 'package:app_drinks/models/list_marked_drinks.dart';
 import 'package:app_drinks/models/search.dart';
 import 'package:app_drinks/screens/bookmark_details/bookmark_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GridListFavorite extends StatefulWidget {
-  const GridListFavorite( this.listDrink,this._size, {Key? key, }) : super(key: key);
 
+class GridListFavorite extends StatelessWidget {
   final Size _size;
-  final List<MarkedDrink> listDrink;
 
-  @override
-  State<GridListFavorite> createState() => _GridListFavoriteState();
-}
+  const GridListFavorite(this._size,{Key? key,}) : super(key: key);
 
-class _GridListFavoriteState extends State<GridListFavorite> {
-  late List<MarkedDrink> searchedDrinks = [];
-
-  void _runFilter(String enteredKeyword) {
+   _runFilter(String enteredKeyword, List<MarkedDrink> listDrink) {
     List<MarkedDrink> results = [];
     if (enteredKeyword.isEmpty) {
-      results = widget.listDrink;
+      results = listDrink;
     } else {
-      results = widget.listDrink
+      results = listDrink
           .where((user) =>
           _jsonConverter(user).toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
     }
-    setState(() => searchedDrinks = results);
+    return results;
   }
 
 
   @override
   Widget build(BuildContext context) {
-    _runFilter(Provider.of<Search>(context, listen:true).word);
+    var searchedDrinks = _runFilter(Provider.of<Search>(context, listen:true).word, Provider.of<ListMarkedDrinks>(context, listen: false).markedDrinks);
     return SizedBox(
-      height: widget._size.height,
+      height: _size.height,
       child: GridView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.only(right:16.0),

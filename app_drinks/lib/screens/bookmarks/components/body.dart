@@ -1,6 +1,7 @@
 import 'package:app_drinks/screens/bookmarks/components/title_with_searchbar_without_backarrow.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import 'future_grid_list.dart';
 
 class Body extends StatelessWidget {
@@ -12,9 +13,10 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [TitleWithSearchBarWithoutBackArrow(size, 'BookMark'),
-        FutureGridList(size),
-
+        children: [
+          TitleWithSearchBarWithoutBackArrow(size, 'BookMark'),
+          FutureGridList(size),
+          const SizedBox(height: kDefaultPadding)
         ],
       ),
     );
